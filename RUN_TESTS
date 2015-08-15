@@ -1,0 +1,31 @@
+#!/bin/sh
+echo "-- Testing your implementation of malloc --"
+echo ""
+echo "- If you have any problem in passing a test read the corresponding"
+echo "- source file to understand what the test is checking"
+echo ""
+echo -n "********************* TEST MERGE ... "
+read answ
+./tstmerge
+echo -n "********************* TEST ALGORITHMS ... "
+read answ
+./tstalgorithms
+echo -n "********************* TEST EXTREME USAGE ... "
+read ans
+./tstextreme
+echo -n "********************* TEST MALLOC ... "
+read ans
+./tstmalloc
+echo -n "********************* TEST MEMORY ... "
+read ans
+./tstmemory
+echo -n "********************* TEST REALLOC ... "
+read ans
+./tstrealloc
+echo -n "********************* TEST CRASH  SIMPLE ... "
+read ans
+./tstcrash_simple
+echo -n "********************* TEST CRASH COMPLEX ...  "
+read ans
+./tstcrash_complex
+
