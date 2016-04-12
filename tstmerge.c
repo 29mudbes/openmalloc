@@ -1,11 +1,3 @@
-/* 
-
-checks if merging of freed blocks seems to work correctly
-
-Author: Robert Rönngren 050218
-
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "brk.h"
