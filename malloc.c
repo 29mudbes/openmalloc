@@ -63,9 +63,8 @@ void *malloc(
  * morecore asks system for more memory and returns pointer to it.
  *
  */
-static Header *morecore(
-    unsigned nu) /* the amount of memory to ask for (in Header-sized units) */
-{
+/* the amount of memory to ask for (in Header-sized units) */
+static Header *morecore(unsigned nu) {
     char *cp;
     Header *up;
     if (nu < NALLOC)
@@ -84,9 +83,8 @@ static Header *morecore(
  *
  * Put block ap in free list.
  */
-void free(
-    void *ap) /* pointer to data part of allocated memory block */
-{
+/* pointer to data part of allocated memory block */
+void free(void *ap) {
 #if STRATEGY == 4
     int list_index;
     Header* old_first_free;
@@ -152,9 +150,8 @@ void free(
  *
  * realloc changes size of the given memory block and returns pointer to new
  */
-void *realloc(
-    void *ptr,      /* pointer to memory block to resize */
-    size_t size)    /* the new size, in bytes */
+/* pointer to memory block to resize */
+void *realloc(void *ptr, size_t size)    /* the new size, in bytes */
 {
     Header *bp, *p;
 
