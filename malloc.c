@@ -151,8 +151,8 @@ void free(void *ap) {
  * realloc changes size of the given memory block and returns pointer to new
  */
 /* pointer to memory block to resize */
-void *realloc(void *ptr, size_t size)    /* the new size, in bytes */
-{
+/* the new size, in bytes */
+void *realloc(void *ptr, size_t size) {
     Header *bp, *p;
 
     /*
