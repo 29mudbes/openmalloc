@@ -7,7 +7,6 @@
 
 #include <limits.h>
 
-
 /* malloc_best
  *
  * malloc_best returns the start address of the newly allocated memory.
@@ -15,20 +14,18 @@
  * block that is large enough.
  *
  */
-void *malloc_best(
-    size_t nbytes) /* number of bytes of memory to allocate */
-{
+/* number of bytes of memory to allocate */
+void *malloc_best(size_t nbytes) {
     Header *p, *prevp;
     Header *moreroce(unsigned);
     unsigned nunits, min_size = INT_MAX;
     Header *minp = NULL, *minprevp = NULL;
 
-    nunits = (nbytes+sizeof(Header)-1)/sizeof(Header) + 1;
+    nunits = (nbytes + sizeof(Header) - 1) / sizeof(Header) + 1;
     if ((prevp = freep) == NULL) { /* no free list yet */
         base.s.ptr = freep = prevp = &base;
         base.s.size = 0;
     }
-
 
     /*
      * Iterate over the free list and find the smallest block that is large
@@ -40,7 +37,7 @@ void *malloc_best(
             if (p->s.size == nunits) { /* exactly */
                 prevp->s.ptr = p->s.ptr;
                 freep = prevp;
-                return (void *)(p + 1);
+                return (void *) (p + 1);
             }
             else {
                 if (minp == NULL || p->s.size < min_size) {
@@ -57,7 +54,7 @@ void *malloc_best(
                 minp += minp->s.size;
                 minp->s.size = nunits;
                 freep = minprevp;
-                return (void *)(minp + 1);
+                return (void *) (minp + 1);
             }
             if ((p = morecore(nunits)) == NULL) {
                 return NULL; /* none left */

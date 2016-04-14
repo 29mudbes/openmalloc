@@ -3,24 +3,18 @@
  * This module contains the function that implements the First fit malloc
  * strategy, malloc_first().
  *
- */
-
-
-/* malloc_first
- *
  * malloc_first returns the start address of the newly allocated memory.
  * It implements the First fit algorithm, which simply returns the first free
  * memory that is large enough.
  *
  */
-void *malloc_first(
-        size_t nbytes) /* number of bytes of memory to allocate */
-{
+/* number of bytes of memory to allocate */
+void *malloc_first(size_t nbytes) {
     Header *p, *prevp;
     Header *moreroce(unsigned);
     unsigned nunits;
 
-    nunits = (nbytes+sizeof(Header)-1)/sizeof(Header) + 1;
+    nunits = (nbytes + sizeof(Header) - 1) / sizeof(Header) + 1;
     if ((prevp = freep) == NULL) { /* no free list yet */
         base.s.ptr = freep = prevp = &base;
         base.s.size = 0;
@@ -45,7 +39,7 @@ void *malloc_first(
             }
             freep = prevp;
             /* return Data part of block to user */
-            return (void *)(p+1); 
+            return (void *) (p + 1);
         }
         if (p == freep) { /* wrapped around free list */
             if ((p = morecore(nunits)) == NULL)

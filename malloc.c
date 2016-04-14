@@ -37,9 +37,8 @@ static Header *freep = NULL;
  * implementations depending on the value of STRATEGY.
  *
  */
-void *malloc(
-    size_t nbytes) /* number of bytes of memory to allocate */
-{
+/* number of bytes of memory to allocate */
+void *malloc(size_t nbytes) {
     if (nbytes == 0) {
         return NULL;
     }
@@ -74,7 +73,7 @@ static Header *morecore(unsigned nu) {
         return NULL;
     up = (Header *) cp;
     up->s.size = nu;
-    free((void *)(up+1));
+    free((void *) (up + 1));
     return freep;
 }
 
@@ -95,7 +94,7 @@ void free(void *ap) {
     }
 
     Header *bp, *p;
-    bp = (Header *)ap - 1;
+    bp = (Header *) ap - 1;
 
     if (bp->s.size <= 0) {
         return;
@@ -167,7 +166,7 @@ void *realloc(void *ptr, size_t size) {
         return NULL;
     }
 
-    bp = (Header*) ptr - 1;
+    bp = (Header *) ptr - 1;
     unsigned int numbytes = sizeof(Header) * (bp->s.size - 1);
 
     if (size == numbytes) {
