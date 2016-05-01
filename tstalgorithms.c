@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "malloc.h"
+#include "openmalloc.h"
 #include "tst.h"
 
 #define MAXPOSTS 2000

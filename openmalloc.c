@@ -1,13 +1,9 @@
-/* malloc main
- *
- * This module contains the three library functions malloc(), free() and
- * realloc(), together with a helper function morecore() that asks the system
- * for more memory.
+/* openmalloc main
  *
  */
 
 #include "brk.h"
-#include "malloc.h"
+#include "openmalloc.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>

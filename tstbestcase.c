@@ -1,4 +1,4 @@
-#include "malloc.h"
+#include "openmalloc.h"
 #include "tstcommon.h"
 #include <stdio.h>
 #include <stdlib.h>
