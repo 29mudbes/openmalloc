@@ -48,15 +48,13 @@ typedef struct
 
 allocpost memPosts[MAXPOSTS];
 
-void calcMemUsage(int *max)
-{
+void calcMemUsage(int *max) {
   int sum=0,i;
   for(i=0;i<MAXPOSTS;i++) sum += memPosts[i].size*sizeof(double);
   if(sum > *max) *max = sum;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   int i, maxMem=0;
   void *start, *end;
   char *progname;
@@ -69,8 +67,7 @@ int main(int argc, char *argv[])
   srand((unsigned int)time(NULL));
   start = (void *)sbrk(0);
 
-  for(i=0;i<MAXPOSTS;i++)
-    {
+  for(i=0;i<MAXPOSTS;i++)  {
       memPosts[i].size = rand()%(MAXSIZE/2);
       memPosts[i].ptr = (double*) malloc(memPosts[i].size*sizeof(double));
       if ( memPosts[i].size == 0 &&  memPosts[i].ptr!= NULL )
@@ -85,8 +82,7 @@ int main(int argc, char *argv[])
   
   calcMemUsage(&maxMem);
   
-  for(i=0;i<MAXITERS;i++)
-    {
+  for(i=0;i<MAXITERS;i++) {
       int index;
       index = rand()%MAXPOSTS;
  
