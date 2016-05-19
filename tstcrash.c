@@ -4,7 +4,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
-
+#include <string.h>
 char *progname;
 
 void t_stack()
@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
   int add = 0;
   char *p, *q, *r, *t;
   
-  signal( SIGSEGV, t_stack);         /* catch segmentation faults */
+  signal( SIGSEGV, t_stack); /* catch segmentation faults */
 
   if (argc > 0)
     progname = argv[0];

@@ -7,15 +7,14 @@
 
 char *progname;
 
-void t_stack()
-{
+void t_stack() {
   char *message = ", * ERROR: Catched SIGSEGV/SIGBUS in crash test\n";
   write(2,progname, strlen(progname) + 1);
   write(2,message, strlen(message) + 1);
   exit(1);
 }
 
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[]) {
   
   static char arr[20];
   caddr_t highbreak, lowbreak;
