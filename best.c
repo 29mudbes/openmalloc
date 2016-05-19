@@ -1,4 +1,4 @@
-/* best fit malloc
+/* best fit openmalloc
  *
  * This module contains the function that implements the Best fit malloc
  * strategy, malloc_best().
@@ -7,9 +7,9 @@
 
 #include <limits.h>
 
-/* malloc_best
+/* openmalloc
  *
- * malloc_best returns the start address of the newly allocated memory.
+ * openmalloc returns the start address of the newly allocated memory.
  * It implements the Best fit algorithm, which tries to find the smallest free
  * block that is large enough.
  *

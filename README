@@ -1,7 +1,7 @@
 README
 ======
 
-This is a student implementation of the memory allocator malloc as specified by
+This is an implementation of the memory allocator malloc as specified by
 the ANSI/ISO standards.
 
 

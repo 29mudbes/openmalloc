@@ -12,9 +12,8 @@
  * block that is as large as possible.
  *
  */
-void *malloc_worst(
-        size_t nbytes) /* number of bytes of memory to allocate */
-{
+void *malloc_worst(size_t nbytes) { /* number of bytes of memory to allocate */
+
     Header *p, *prevp;
     Header *moreroce(unsigned);
     unsigned nunits, max_size = 0;
@@ -25,7 +24,6 @@ void *malloc_worst(
         base.s.ptr = freep = prevp = &base;
         base.s.size = 0;
     }
-
 
     /*
      * Iterate over the free list and find the largest block, that is large

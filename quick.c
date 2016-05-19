@@ -34,9 +34,8 @@ static int smallest_block_size_exp = 5;
  * number of bytes of data to allocate.
  *
  */
-int get_quick_fit_list_index(
-        unsigned int nbytes) /* number of data bytes to allocate */
-{
+int get_quick_fit_list_index(unsigned int nbytes) { /* number of data bytes to allocate */
+
     unsigned int upper_bound;
     int i;
     for (i = 0; i < NRQUICKLISTS; ++i) {

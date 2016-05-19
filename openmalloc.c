@@ -1,7 +1,3 @@
-/* openmalloc main
- *
- */
-
 #include "brk.h"
 #include "openmalloc.h"
 #include <stdbool.h>
