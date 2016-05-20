@@ -81,11 +81,7 @@ int main(int argc, char *argv[]) {
         else if (memPosts[i].ptr != NULL)
             memPosts[i].ptr[0] = (double) 3.14;
     }
-    diff = clock() - start2;
-    int msec = diff * 1000 / CLOCKS_PER_SEC;
-    printf("Time taken %d seconds %d milliseconds", msec / 1000, msec % 1000);
     calcMemUsage(&maxMem);
-    start2 = clock(), diff;
     for (i = 0; i < MAXITERS; i++) {
         int index;
         index = rand() % MAXPOSTS;
@@ -116,10 +112,6 @@ int main(int argc, char *argv[]) {
         }
         calcMemUsage(&maxMem);
     }
-
-    diff = clock() - start2;
-    msec = diff * 1000 / CLOCKS_PER_SEC;
-    printf("Time taken %d seconds %d milliseconds", msec / 1000, msec % 1000);
 
     end = (void *) sbrk(0);
     fprintf(stderr,
