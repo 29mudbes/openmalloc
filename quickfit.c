@@ -26,21 +26,22 @@ static Header* quick_fit_lists[NRQUICKLISTS];
  */
 static int smallest_block_size_exp = 5;
 
-/* get_quick_fit_list_index
+/* qindex
  *
- * get_quick_fit_list_index returns the quick fit list index for the given
+ * qindex returns the quick fit list index for the given
  * number of bytes of data to allocate.
  * The size of the header is added in the calculations, so nbytes should be the
  * number of bytes of data to allocate.
  *
  */
-int get_quick_fit_list_index(unsigned int nbytes) { /* number of data bytes to allocate */
+int qindex(unsigned int nbytes) { /* number of data bytes to allocate */
 
     unsigned int upper_bound;
+    unsigned int tmp = nbytes + sizeof(Header);
     int i;
     for (i = 0; i < NRQUICKLISTS; ++i) {
         upper_bound = POW2(i + smallest_block_size_exp);
-        if (nbytes + sizeof(Header) <= upper_bound) {
+        if (tmp <= upper_bound) {
             return i;
         }
     }
@@ -101,35 +102,28 @@ Header* init_quick_fit_list(
 
     return (Header *) cp; /* pointer to beginning of first header */
 }
-
-
+#include <time.h>
 /* malloc_quick
  *
  * malloc_quick returns the start address of the newly allocated memory.
  *
  */
-void *malloc_quick(
-        size_t nbytes) /* number of bytes of memory to allocate */
+void *malloc_quick(size_t nbytes) /* number of bytes of memory to allocate */
 {
     Header *moreroce(unsigned);
-    int list_index, i;
-
-    list_index = get_quick_fit_list_index(nbytes);
+    int index, i;
+    index = qindex(nbytes);
 
     /* 
      * Use another strategy for too large allocations. We want the allocation
      * to be quick, so use malloc_first().
      */
 
-    if (list_index >= NRQUICKLISTS) {
+    if (index >= NRQUICKLISTS) {
         return malloc_first(nbytes);
     }
 
-
-    /*
-     * Initialize the quick fit lists if this is the first run.
-     */
-
+    /* Initialize the quick fit lists if this is the first run. */
     if (first_run) {
         for (i = 0; i < NRQUICKLISTS; ++i) {
             quick_fit_lists[i] = NULL;
@@ -143,12 +137,12 @@ void *malloc_quick(
      * blocks present, so we will have to create some before continuing.
      */
 
-    if (quick_fit_lists[list_index] == NULL) {
-        Header* new_quick_fit_list = init_quick_fit_list(list_index);
+    if (quick_fit_lists[index] == NULL) {
+        Header* new_quick_fit_list = init_quick_fit_list(index);
         if (new_quick_fit_list == NULL) {
             return NULL;
         } else {
-            quick_fit_lists[list_index] = new_quick_fit_list;
+            quick_fit_lists[index] = new_quick_fit_list;
         }
     }
 
@@ -159,8 +153,8 @@ void *malloc_quick(
      * it points to the next in the list.
      */
 
-    void* pointer_to_return = (void *)(quick_fit_lists[list_index] + 1);
-    quick_fit_lists[list_index] = quick_fit_lists[list_index]->s.ptr;
-
+    void* pointer_to_return = (void *)(quick_fit_lists[index] + 1);
+    quick_fit_lists[index] = quick_fit_lists[index]->s.ptr;
+   /* printf("Time taken %d seconds %d milliseconds", msec/1000, msec%1000);*/
     return pointer_to_return;
 }

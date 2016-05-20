@@ -1,8 +1,3 @@
-##################################################
-## General configuration
-## =====================
-
-# Every Makefile should contain this line:
 SHELL=/bin/sh
 
 # Program for compiling C programs.
@@ -16,7 +11,7 @@ NRQUICKLISTS=6
 CFLAGS=-DSTRATEGY=$(STRATEGY) -DNRQUICKLISTS=$(NRQUICKLISTS)
 
 # Default plus extra flags for C preprocessor and compiler.
-all_cflags=$(CFLAGS) -Wall -Wextra -ansi -O4
+all_cflags=$(CFLAGS) -Wall -Wextra -ansi -O4 -pedantic
 
 # Malloc source file to use. Set to empty (with `make MALLOC=`) for system default.
 MALLOC=openmalloc.c

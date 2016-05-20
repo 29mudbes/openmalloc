@@ -16,10 +16,10 @@ static Header base;
 static Header *freep = NULL;
 
 /* Include the different malloc implementation source files here. */
-#include "first.c"
-#include "best.c"
-#include "worst.c"
-#include "quick.c"
+#include "firstfit.c"
+#include "bestfit.c"
+#include "worstfit.c"
+#include "quickfit.c"
 
 
 /* malloc
@@ -99,7 +99,7 @@ void free(void *ap) {
      */
 
 #if STRATEGY == 4
-    list_index = get_quick_fit_list_index(sizeof(Header) * (bp->s.size - 1));
+    list_index = qindex(sizeof(Header) * (bp->s.size - 1));
     if (list_index < NRQUICKLISTS) {
         old_first_free = quick_fit_lists[list_index];
         quick_fit_lists[list_index] = bp;
