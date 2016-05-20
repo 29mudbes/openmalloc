@@ -2,14 +2,14 @@ SRC	= time.c
 
 OBJ	= openmalloc.o firstfit.o bestfit.o worstfit.o quickfit.o
 
-BIN	= time time_system time_firstfit time_bestfit time_worstfit time_quickfit
+BIN	= time time_system time_firstfit time_bestfit time_worstfit time_quickfit gb_quickfit
 
 CFLAGS	= -g -Wall -ansi
 
 CC	= gcc
 
 
-all: time_system time_firstfit time_bestfit time_worstfit time_quickfit 
+all: time_system time_firstfit time_bestfit time_worstfit time_quickfit gb_quickfit
      .PHONY : all
 
 time_system:
@@ -22,7 +22,8 @@ time_worstfit: worstfit.o
 	$(CC) $(CFLAGS) -Werror -o $@ worstfit.o time.c
 time_quickfit: quickfit.o
 	$(CC) $(CFLAGS) -Werror -o $@ quickfit.o time.c
-
+gb_quickfit: quickfit.o
+	$(CC) $(CFLAGS) -Werror -o $@ quickfit.o gigtest.c
 
 firstfit.o:
 	$(CC) $(CFLAGS) -c -Werror -o $@ -DSTRATEGY=1 ../openmalloc.c
