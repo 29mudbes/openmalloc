@@ -18,6 +18,12 @@ It does not seem possible for a general-purpose allocator to also serve as gener
 Minimizing Anomalies
 An allocator configured using default settings should perform well across a wide range of real loads that depend heavily on dynamic allocation -- windowing toolkits, GUI applications, compilers, interpretors, development tools, network (packet)-intensive programs, graphics-intensive packages, web browsers, string-processing applications, and so on.
 
+Some issues that an allocator needs to address are:
+
+alignment - some memory alignment are faster than others
+fragmentation - naive allocation and freeing can leave holes that cause bloat
+performance - going back to the OS for more memory can be expensive
+Common requests - in practice applications (esp C++) often do a lot of small allocations so making these efficient can help a lot
 De olika minnesallokeringsmetoderna som ska implementeras är:
 
 [First-fit] Första bästa tillräckligt stora blocket används.

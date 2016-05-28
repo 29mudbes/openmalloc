@@ -93,7 +93,7 @@ Header* init_quick_fit_list(
     }
 
 
-    /* 
+    /*
      * Let the last block point to NULL, but still with correct size.
      */
 
@@ -108,13 +108,13 @@ Header* init_quick_fit_list(
  * malloc_quick returns the start address of the newly allocated memory.
  *
  */
-void *malloc_quick(size_t nbytes) /* number of bytes of memory to allocate */
-{
+void *malloc_quick(size_t nbytes) {
+
     Header *moreroce(unsigned);
     int index, i;
     index = qindex(nbytes);
 
-    /* 
+    /*
      * Use another strategy for too large allocations. We want the allocation
      * to be quick, so use malloc_first().
      */
@@ -146,7 +146,6 @@ void *malloc_quick(size_t nbytes) /* number of bytes of memory to allocate */
         }
     }
 
-
     /*
      * Now that we know there is at least one free quick fit memory block,
      * let's use return that and also update the quick fit list pointer so that
@@ -155,6 +154,5 @@ void *malloc_quick(size_t nbytes) /* number of bytes of memory to allocate */
 
     void* pointer_to_return = (void *)(quick_fit_lists[index] + 1);
     quick_fit_lists[index] = quick_fit_lists[index]->s.ptr;
-   /* printf("Time taken %d seconds %d milliseconds", msec/1000, msec%1000);*/
     return pointer_to_return;
 }
