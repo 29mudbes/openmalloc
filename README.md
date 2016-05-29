@@ -37,24 +37,11 @@ The different memory allocation algorithms are
 
 How much memory is wasted on avaerga and in the worst case in the blcks that are allocated via malloc() from the quick-fit lists? The quick fit lists receive blocks of even powers of 2 from a pre-calculated value. This means that the allowed block size in each list is doubled for every list until the last list. In the worst case, a block just can't fit in one list and is one unit too large, which means it must be placed in the list for double large blocks. 
 
-Där $n$ är storleken på blocket där minnet inte fick plats.
-Eftersom minnet vi ville allokera bara är något större än det block den inte
-fick plats i är den mycket nära hälften så stor nästa lista med dubbelt så många
-block. Alltså spiller vi i värsta fall nästan $50\%$ av allt vi allokerar.
+Där $n$ är storleken på blocket där minnet inte fick plats. Eftersom minnet vi ville allokera bara är något större än det block den inte fick plats i är den mycket nära hälften så stor nästa lista med dubbelt så många block. Alltså spiller vi i värsta fall nästan $50\%$ av allt vi allokerar.
 
-Medelvärdet av minnes spillet när man använder Quick Fit ökar när block
-storleken ökar (man har fler listor som tillåter större block). Den största
-andelen spill kommer att komma ifrån de större block listorna, eftersom dem har
-mer minne att spilla. Medelvärdet kommer alltså att domineras av de större
-blockstorlekarna. De större blockstorlekarna kommer dessutom att ha ett mycket
-snarlikt medelvärde, alltså kan vi approximera hela medelvärdet till medelvärdet
-hos listan med störst block. Medelvärdet av minnesspillet i den sista listan är:
+Medelvärdet av minnes spillet när man använder Quick Fit ökar när block storleken ökar (man har fler listor som tillåter större block). Den största andelen spill kommer att komma ifrån de större block listorna, eftersom dem har mer minne att spilla. Medelvärdet kommer alltså att domineras av de större blockstorlekarna. De större blockstorlekarna kommer dessutom att ha ett mycket snarlikt medelvärde, alltså kan vi approximera hela medelvärdet till medelvärdet hos listan med störst block. Medelvärdet av minnesspillet i den sista listan är:
 
-Där $n$ är storleken på det blocken i den sista listan. Det slutgiltiga uttrycket
-för andelen minnesspill $\frac{1}{2} + \frac{1}{2n}$ består av två
-termer: $\frac{1}{2}$ som är värsta fallet ($50\%$) och $\frac{1}{2n}$, när $n$
-ökar kommer den andra termen minska i värde och uttrycket kommer närma sig värstafallet. 
-Medelfallet kommer i praktiken tyvärr att ligga ganska nära värstafallet $50\%$ spill.
+Där $n$ är storleken på det blocken i den sista listan. Det slutgiltiga uttrycket för andelen minnesspill $\frac{1}{2} + \frac{1}{2n}$ består av två termer: $\frac{1}{2}$ som är värsta fallet ($50\%$) och $\frac{1}{2n}$, när $n$ ökar kommer den andra termen minska i värde och uttrycket kommer närma sig värstafallet. Medelfallet kommer i praktiken tyvärr att ligga ganska nära värstafallet $50\%$ spill.
 
 Programstrukturen var given i uppgiftsbeskrivningen, vi kompletterade den en del med hjälp av man-sidorna för malloc/free/realloc.
 De ändringar vi gjorde var att i \texttt{malloc.c} ha en preprocessorvillkorssats som inkluderade de olika algoritmerna beroende på vad \texttt{STRATEGY} var satt till. Baskoden togs direkt från boken ``The C Programming Language'' precis som det tipsades om i boken, den koden ligger till grund för den större delen av våra implementationer.
@@ -80,13 +67,14 @@ Nedan finnes resultat av tidskörningarna.
 		Worst Fit	& 1,39 s		& 1,41 s	& 1,39 s	& 1,39 s	& 1,39 s	& 1,39 s	& 0,01 s \\
 		Quick Fit	& 1,58 s		& 1,52 s	& 1,52 s	& 1,52 s	& 1,55 s	& 1,53 s	& 0,02 s \\
 		
+We see that the simplest algorithm: 'First fit' is the fastest. Best and worst fit has more logic and therefore takes more time. The slowest was 'Quick fit" because
+our quick fit implementaion never pre-allocate blocks, it only allocate what is needed. This test code is a bit unfair bcause only three blocks at a time is allocatd.
+That way the advantage of quick-fit lists are not used with so few blocks. 
 
+In conslusion we can see that we are below the system's malloc time, which means that we don't have a performance issue. 
 
-Vi kan utläsa att den enklaste algoritmen, `First Fit` är den snabbaste. Best och Worst fit har mer logik och kräver därför mer tid på sig. Långsammast, vilket är lite motsägelsefullt var `Quick Fit`. Detta beror på att våran Quick fit implementation aldrig förallokerar några block, utan bara allokerar så mycket som behövs. Just denna testkod är lite orättvis eftersom bara tre block allokeras åt gången, quick-fit listornas fördelar utnyttjas aldrig med så få block.
-
-Sammanfattningsvis kan man se att vi ligger under systemets egna tidsåtgång, vilket betyder att vi egentligen inte har några prestandaproblem i just det här fallet.
-
-Vi använder tre olika storlekar för mätdata en liten (64 bytes), en stor (10 sidor) och en slumpmässig (0 till 2 sidor). Dessa har allokerats 1000 gånger. Den faktiska åtgången har mäts m.h.a \texttt{sbrk(0)} och den optimala åtgången har även summerats. Dessa har dividerats för att få en faktor på hur stor del av datan som är overhead.
+We use three different sizes for measure data, one small (64 bytes), one large (10 pages) and one random (0 to 2 pages). These are allocated 100 times. 
+The actual usage is measured with sbrk(0) and the optimal consumtion is also summed up. These are divided to get a factor of how much of the data is overhead. 
 
 					& Small blocks	& Big blocks	& Mixed blocks	& Avg \\
 		
@@ -96,15 +84,16 @@ Vi använder tre olika storlekar för mätdata en liten (64 bytes), en stor (10 
 		Quick Fit	& 2		& 1,0004	& 1,0631	& 1,355 \\
 		System		& 2,112	& 1,0006	& 1,0169	& 1,377 \\
 		
-Som väntat kan vi se att Quick Fit är slösaktig med minnet. Systemets egna malloc hamnar i dåligt läge på grund av den dåliga presteringen för små block. Vidare kan vi konstantera att för stora block är overhead-datan obetydlig, som sig bör.
+As expected we can see that Quick Fit is wasteful with the resources. The system's malloc performs badly because of the bad performance for small blocks. 
 
-Vi kan även se att för stora block så är quick fit ekvivalent med first fit, precis som den ska eftersom alla block hamnar i den sista listan.
-
-Labben hade en klart annorlunda struktur är de tidigare labbarna. Nedan följer lite reflektioner kring laborationen:
-
-Att leverera färdiga tester istället för en kravspec är en klar förbättring och gör utvecklingen mycket enklare.
-Labben tvingade oss att använda och förstå debuggaren `gdb' för att hitta fel. En övning om enbart gdb hade nog varit grymt, ty den är inte särskilt intuitiv att använda.
-Att ha 4 skilda algoritmer gjorde det lätt att arbeta parallellt.
+Furthermore we see that for large blocks the overhead data has little or no meaning, as it should be. 
+ 
+We can also see that for large blocks, quick fit is equavalent with first fit, like it should be beacuse all blocks occur in the last list. 
+  
+Reflections
+Test-driven development is an improvement mostly, but it can be expensive. 
+Good to know gdb. 
+Good to work on different algorthms - easy to separate the work. 
 
 Work: 4 weeks
 Difficulty: 3/5
