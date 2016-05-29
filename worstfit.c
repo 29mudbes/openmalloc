@@ -1,11 +1,7 @@
-/* malloc_best
+/* malloc_worst
  *
  * This module contains the function that implements the Worst fit malloc
  * strategy, malloc_worst().
- *
- */
-
-/* malloc_worst
  *
  * malloc_worst returns the start address of the newly allocated memory.
  * It implements the Worst fit algorithm, which tries to find a free memory
