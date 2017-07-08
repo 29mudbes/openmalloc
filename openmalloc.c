@@ -20,7 +20,7 @@ static Header *freep = NULL;
 #include "bestfit.c"
 #include "worstfit.c"
 #include "quickfit.c"
-
+#include "mthreadfit.c"
 
 /* malloc
  *
@@ -43,6 +43,8 @@ void *malloc(size_t nbytes) {
     return malloc_worst(nbytes);
 #elif STRATEGY == 4
     return malloc_quick(nbytes);
+#elif STRATEGY == 5
+    return malloc_mthread(nbytes);
 #else
     exit(1);
 #endif

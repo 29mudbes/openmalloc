@@ -1,17 +1,18 @@
-#ifndef _malloc_h_
-#define _malloc_h_
+#ifndef _openmalloc_h_
+#define _openmalloc_h_
 
 #include <string.h>
-
+#include <pthread.h>
 /*
  * The strategy (allocation algorithm) to use. Choose from:
  * 1) First fit
  * 2) Best fit
  * 3) Worst fit
  * 4) Quick fit
+ * 5) Multithreaded fit
  */
 #ifndef STRATEGY
-#define STRATEGY 1
+#define STRATEGY 5
 #endif
 
 /*
@@ -34,6 +35,7 @@ union header {
         union header *ptr;/* next block if on free list */
         unsigned size;
         /* size of this block */
+        pthread_mutex_t lock;
     } s;
     Align x;
     /* force alignment of blocks */

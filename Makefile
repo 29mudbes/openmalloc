@@ -4,14 +4,14 @@ SHELL=/bin/sh
 CC=gcc
 
 # What allocation strategy to use, and number of quick fit lists.
-STRATEGY=4
+STRATEGY=5
 NRQUICKLISTS=6
 
 # Extra flags to give to the C preprocessor and programs that use it (the C and Fortran compilers).
 CFLAGS=-DSTRATEGY=$(STRATEGY) -DNRQUICKLISTS=$(NRQUICKLISTS)
 
 # Default plus extra flags for C preprocessor and compiler.
-all_cflags=$(CFLAGS) -Wall -Wextra -ansi -O4 -pedantic
+all_cflags=$(CFLAGS) -Wall -Wextra -ansi -O4 -pedantic -lpthread
 
 # Malloc source file to use. Set to empty (with `make MALLOC=`) for system default.
 MALLOC=openmalloc.c
