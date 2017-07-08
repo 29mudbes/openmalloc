@@ -38,11 +38,9 @@ library. You can compare the performance of your malloc implementation
 against the system's one.
 
 The Makefile can be used directly to compile and generate all seven
-binaries. The name of your file should be "malloc.c". Note that
+binaries. The name of your file should be "openmalloc.c". Note that
 compilation is done using GNU's C compiler. You can also use any other
 ANSI compiler.
 
 The script RUN_TESTS runs all seven tests. Normally, a test should
 take a few seconds to complete.
-
-Have fun!
