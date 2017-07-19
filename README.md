@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/montao/openmalloc.svg?branch=master)](https://travis-ci.org/montao/openmalloc)
+
 # openmalloc
 
 A good memory allocator needs to balance a number of goals:
