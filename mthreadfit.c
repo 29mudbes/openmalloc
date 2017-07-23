@@ -7,17 +7,16 @@
 
 #include <limits.h>
 
-/* openmalloc
+/* malloc_mthread
  *
- * openmalloc returns the start address of the newly allocated memory.
- * It implements the Best fit algorithm, which tries to find the smallest free
+ * malloc_mthread returns the start address of the newly allocated memory.
+ * It implements the multithreaded best fit algorithm, which tries to find the smallest free
  * block that is large enough.
  *
  */
 /* number of bytes of memory to allocate */
 void *malloc_mthread(size_t nbytes) {
     Header *p, *prevp;
-    Header *moreroce(unsigned);
     unsigned nunits, min_size = INT_MAX;
     Header *minp = NULL, *minprevp = NULL;
 
@@ -26,6 +25,7 @@ void *malloc_mthread(size_t nbytes) {
         base.s.ptr = freep = prevp = &base;
         base.s.size = 0;
     }
+    pthread_mutex_init(&base.s.lock, NULL);
     pthread_mutex_lock(&base.s.lock);
     /*
      * Iterate over the free list and find the smallest block that is large
